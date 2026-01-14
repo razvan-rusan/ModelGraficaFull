@@ -1,6 +1,6 @@
 ﻿namespace ModelGraficaFull
 {
-    partial class Form1
+    partial class CasaMeaDeLaTara
     {
         /// <summary>
         ///  Required designer variable.

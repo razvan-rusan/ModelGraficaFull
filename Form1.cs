@@ -1,11 +1,13 @@
+using static ModelGraficaFull.LSystems;
+
 namespace ModelGraficaFull
 {
-    public partial class Form1 : Form
+    public partial class CasaMeaDeLaTara : Form
     {
         Graphics mainGraphics;
         Bitmap mainBitmap;
 
-        public Form1()
+        public CasaMeaDeLaTara()
         {
             InitializeComponent();
             mainBitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
@@ -30,7 +32,14 @@ namespace ModelGraficaFull
                  );  
             }
             #endregion
-            
+            #region Trees
+            //Gosper gosper = new Gosper(mainGraphics, "A", MathF.PI / 3, new PointF(pictureBox1.Width / 2, pictureBox1.Height / 2), 8f, 4);
+            //gosper.Draw();
+            AcaciaTree tree = new AcaciaTree(mainGraphics, "X", MathF.PI/8, new(300f, 300f), 40f, 3);
+            tree.Draw();
+            Algae1 algae1 = new Algae1(mainGraphics, "A", MathF.PI / 7, new(100f, 400f), 10f, 5);
+            algae1.Draw();
+            #endregion
             pictureBox1.Image = mainBitmap;
         }
 
