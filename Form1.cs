@@ -11,7 +11,15 @@ namespace ModelGraficaFull
             mainBitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             mainGraphics = Graphics.FromImage(mainBitmap);
 
-            Bezier.DrawBezierBird(new(Color.Black, 4), mainGraphics, new(202f,248f), new(80f, 30f));
+            PointFTransformation scale = (point) => new PointF(point.X * 1.3f - 100f, point.Y - 100f);
+
+            Bezier.DrawBezierBird(
+                new(Color.Black, 4), 
+                mainGraphics, 
+                new(202f,248f), 
+                new(80f, 30f), 
+                scale,
+                20);
             
             pictureBox1.Image = mainBitmap;
         }
