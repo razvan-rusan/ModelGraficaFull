@@ -11,6 +11,11 @@ namespace ModelGraficaFull
             mainBitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             mainGraphics = Graphics.FromImage(mainBitmap);
 
+            #region Sun
+            Sun s = new Sun(mainGraphics, pictureBox1.Width/2-310, pictureBox1.Height/2-230, 80f, 30);
+            s.Draw();
+            #endregion
+            #region Birds
             PointFTransformation birdTransform = (point) => new(point.X * 1.3f - 100f, point.Y - 100f),
                                  smallTranslation = (p) => new(p.X+50, p.Y+23);
             PointFTransformation currT = new(birdTransform);
@@ -24,7 +29,8 @@ namespace ModelGraficaFull
                     20
                  );  
             }
-
+            #endregion
+            
             pictureBox1.Image = mainBitmap;
         }
 
