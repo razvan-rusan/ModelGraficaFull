@@ -102,12 +102,14 @@ namespace ModelGraficaFull
         * (Ca sa fie scalata frumos)
         */
 
-        public static void DrawBezierBird(Pen p, Graphics g, PointF middlePos, float wingSpan,int resolution = 100) {
+        public static void DrawBezierBird(Pen p, Graphics g, PointF middlePos, AspectRatio ar, int resolution = 100) {
             float[][] magicLeftOffsets = [[0f,0f],[100f,-50f],[130f,-50f],[160f,0f]],
                       magicRightOffsets = [[0f,0f],[30f,-50f],[60f,-50f],[160f,0f]];
             for (int i = 0; i < 4; i++) { 
-                magicLeftOffsets[i][0] *= wingSpan / 320f;
-                magicRightOffsets[i][0] *= wingSpan / 320f;
+                magicLeftOffsets[i][0] *= ar.X / 320f;
+                magicRightOffsets[i][0] *= ar.X / 320f;
+                magicLeftOffsets[i][1] *= ar.Y / 50f;
+                magicRightOffsets[i][1] *= ar.Y / 50f;
             }
             float a = middlePos.X, b = middlePos.Y, c = middlePos.X + magicLeftOffsets[^1][0], d = middlePos.Y;
             List<PointF> pointsLeft=[],pointsRight=[];
