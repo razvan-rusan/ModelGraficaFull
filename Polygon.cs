@@ -10,6 +10,7 @@ namespace ModelGraficaFull
         public PointF[] Points
         {
             get { return [.. points]; }
+            set { points = [.. value]; }
         }
     }
 }

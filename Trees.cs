@@ -6,7 +6,7 @@ namespace ModelGraficaFull
 {
     public static class Trees
     {
-        private static readonly OklchColor darkBrown = new OklchColor(0.3018f, 0.0244f, 87.46f), leafGreen = new OklchColor(0.5106f, 0.1184f, 48.28f);
+        private static readonly OklchColor darkBrown = new OklchColor(0.6871f, 0.3002f, 360f), leafGreen = new OklchColor(0.6871f, 0.1372f, 304.52f);
         
         public static void drawTree(Graphics g, PointF pos, float length, PointFTransformation tr, float angle, int depth)
         {
