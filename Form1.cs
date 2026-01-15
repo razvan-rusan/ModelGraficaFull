@@ -1,4 +1,5 @@
 using System.Drawing;
+using System.Reflection;
 using static ModelGraficaFull.LSystems;
 
 namespace ModelGraficaFull
@@ -58,6 +59,11 @@ namespace ModelGraficaFull
             Sun s = new Sun(mainGraphics, pictureBox1.Width/2-310, pictureBox1.Height/2-230, 80f, 30);
             s.Draw();
             #endregion
+            #region Mountain (Or Lake)
+            PointFTransformation mountainTransform = (p) => new(p.X + pictureBox1.Width * 0.3f, pictureBox1.Height * 1.4f - p.Y);
+            Triangle v1 = new(-300, 0, -300), v2 = new(0, 0, 300), v3 = new(300, 0, -300);
+            Mountain.DrawMountain(mainGraphics, v1, v2, v3, mountainTransform, 6, 250f);
+            #endregion
             #region Clouds
             const int totalClouds = 23;
             for (int i = 0; i < totalClouds; i++)
@@ -79,6 +85,7 @@ namespace ModelGraficaFull
             PointFTransformation birdTransform = (point) => new(point.X * 1.3f - 100f, point.Y - 100f),
                                  smallTranslation = (p) => new(p.X+50, p.Y+23);
             PointFTransformation currT = new(birdTransform);
+            
             for (int i = 0; i < 4; i++, currT = new(Transforms.Compose(currT, smallTranslation))) {
                 Bezier.DrawBezierBird(
                     new(Color.Black, 4),
@@ -165,7 +172,44 @@ namespace ModelGraficaFull
                     });
                 }
             }
-            
+
+            #endregion
+            #region Trees
+            for (int i = 0; i < 7; i++)
+            {
+                float treeXOffset = i * (pictureBox1.Width / 7f) + (float)random.NextDouble() * 40f;
+                float treeHeightVariation = 0.7f + (float)random.NextDouble() * 0.6f;
+
+                PointFTransformation treeTransformation = (point) => new(
+                    point.X * 0.5f + treeXOffset,
+                    pictureBox1.Height * 0.99f - point.Y * treeHeightVariation
+                );
+
+
+                // Start angle at PI/2 (90 degrees) so it grows Upwards
+                Trees.drawTree(mainGraphics, new PointF(pictureBox1.Width*0.7f, 0), 80f, treeTransformation, MathF.PI / 2, 4 + (int)(random.NextSingle() * 7));
+            }
+            #endregion
+            #region Fence
+            for (int j = 0; j < 5; j++) {
+                for (int i = 0; i < 20; i++)
+                {
+                    float fenceXOffset = i * 65f + (float)random.NextDouble() * 30f;
+                    float fenceExtraYScale = (float)random.NextDouble() * 0.3f;
+                    float fenceLightnessVariation = ((float)random.NextDouble() - 0.5f) * 0.3f;
+                    float fenceHeightChangePerLoop = j * 12f * (float) random.NextSingle();
+                    PointFTransformation fenceTransformation = (point) => new(point.X * 0.4f + fenceXOffset, pictureBox1.Height * 0.99f - fenceHeightChangePerLoop + point.Y * (0.2f + fenceExtraYScale));
+                    List<PointF> fencePoints = new([
+                        new PointF(0f, 0f),
+                        new PointF(120,0 + MathF.Pow(random.NextSingle(), 3) * 62f),
+                        new PointF(120-60,-225 + MathF.Pow(random.NextSingle(), 3)),
+                        new PointF(0,-200 + MathF.Pow(random.NextSingle(), 3))
+                    ]);
+                    Polygon p = new([.. fencePoints.Select(fenceTransformation)]);
+                    mainGraphics.FillPolygon(new SolidBrush(new OklchColor(0.3371f + fenceLightnessVariation, 0.0902f, 51.46f)), p.Points);
+                }
+            }
+            mainGraphics.FillRectangle(new SolidBrush(new OklchColor(0.3371f, 0.0902f, 51.46f)), 0, pictureBox1.Height * 0.99f - 70f, pictureBox1.Width, 20f);
             #endregion
             
             pictureBox1.Image = mainBitmap;

@@ -34,19 +34,19 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Location = new Point(37, 29);
+            pictureBox1.Location = new Point(1, -2);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(800, 600);
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 
-            // Form1
+            // CasaMeaDeLaTara
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(998, 677);
+            ClientSize = new Size(801, 600);
             Controls.Add(pictureBox1);
-            Name = "Form1";
+            Name = "CasaMeaDeLaTara";
             Text = "Form1";
             Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
