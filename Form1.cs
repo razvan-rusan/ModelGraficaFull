@@ -6,8 +6,8 @@ namespace ModelGraficaFull
 {
     public partial class CasaMeaDeLaTara : Form
     {
-        Graphics mainGraphics;
-        Bitmap mainBitmap;
+        readonly Graphics mainGraphics;
+        readonly Bitmap mainBitmap;
         readonly Random random = new();
         readonly OklchColor SkyBlue = new(0.632f, 0.1352f, 215f);
         readonly OklchColor SunsetFuchsia = new(0.7053f, 0.1574f, 32.4f);
