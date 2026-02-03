@@ -6,6 +6,7 @@ namespace ModelGraficaFull
 {
     public static class Bezier
     {
+        public static List<PointF>? cachedPoints = null;
         public static void DrawDegree1Bezier(Pen p, PointF p1, PointF p2, Graphics g, int resolution = 100)
         {
             List<PointF> points = [];
@@ -83,6 +84,7 @@ namespace ModelGraficaFull
                 points.Add(__underlying_bezier_lerp(controlPoints, Utility2.clamp(0f, 1f, t))[0]);
                 t += dt;
             }
+            cachedPoints = points;
             for (int i = 0; i < points.Count - 1; i++)
             {
                 g.DrawLine(p, points[i], points[i + 1]);
@@ -98,6 +100,7 @@ namespace ModelGraficaFull
                 points.Add(__underlying_bezier_lerp(controlPoints, Utility2.clamp(0f, 1f, t))[0]);
                 t += dt;
             }
+            cachedPoints = points;
             points = [.. points.Select(tr)];
             for (int i = 0; i < points.Count - 1; i++)
             {

@@ -21,7 +21,7 @@ namespace ModelGraficaFull
         readonly OklchColor SkyBlue = new(0.7929f, 0.3113f, 179.58f);
         readonly OklchColor SunsetFuchsia = new(0.7587f, 0.2594f, 167.93f);
         readonly OklchColor GrassGreen = new(0.312f, 0.1341f, 268.52f);
-        readonly Random random = new Random();
+        readonly Random random = new();
         public Bitmap ApplyBlur7x7(Bitmap src)
         {
             Bitmap dest = new Bitmap(src.Width, src.Height);
@@ -37,8 +37,8 @@ namespace ModelGraficaFull
         { 0,  0,  1,   2,  1,  0,  0 }
     };
 
-            int div = 1003; // Sum of all values in k
-            int radius = 3; // (7 - 1) / 2
+            int div = 1003; 
+            int radius = 3; 
 
             for (int y = radius; y < src.Height - radius; y++)
             {
@@ -122,14 +122,16 @@ namespace ModelGraficaFull
             Submarine.Draw(mainGraphics, pictureBox1.Width * 0.7f, pictureBox1.Height * 0.89f, 200f, 70f, tr);
             #endregion
             #region BezierFish
-            for (int i = 0; i < 20; i++) {
+            for (int i = 0; i < 20; i++)
+            {
                 for (int j = 0; j < 3; j++)
                 {
-                    float xOffset = i * 120f;
-                    float yOffset = j * 140f + random.NextSingle() * (-0.5f) * 40f;
-                    float radius = random.NextSingle() * 20f + 10f, angle = random.NextSingle() * MathF.Tau;
-                    PointFTransformation fishScalingAndTranslationAndRotation = (p) => new(p.X * 0.15f + xOffset + radius * MathF.Sin(angle), p.Y * 0.65f + radius * MathF.Sin(angle) + yOffset);
-                    Fish.Draw(mainGraphics, pictureBox1.Width * 0.5f, pictureBox1.Height * 0.8f, fishScalingAndTranslationAndRotation);
+
+                    float xOffset = i * 90f;
+                    float yOffset = j * 80f + random.NextSingle() * (-0.5f) * 20f;
+                    float scale = Utility<float>.Remap(random.NextSingle(), 0f, 1f, 0.4f, 0.8f);
+                    XYTransformation fishScaling = (x, y) => (-220 + xOffset + x * scale, yOffset + y * scale);
+                    Fish2.Draw(mainGraphics, tr: fishScaling, scl: scale);
                 }
             }
             #endregion
@@ -149,9 +151,28 @@ namespace ModelGraficaFull
                 Trees.drawTree(mainGraphics, new PointF(pictureBox1.Width * 0.7f, 0), 80f, treeTransformation, MathF.PI / 2, 4 + (int)(random.NextSingle() * 7));
             }
             #endregion
+            #region RoadSign
+            float xScl = 0.5f, yScl = 0.5f;
+            RoadSign.Draw(mainGraphics, (x, y) => (pictureBox1.Width * 0.6f + x * xScl, pictureBox1.Height * 0.8f + y * yScl));
+            #endregion
+            #region LSystem
+            using Pen gosperPen = new(Color.LawnGreen, 2);
+            for (int i = 0; i < 3; i++) { 
+                float rx = random.NextSingle() * 20f, ry = random.NextSingle() * 50f + (i==3 ? 70f : 0f);
+                LSystems.Gosper gosperAlgae = new(g: mainGraphics,
+                                                  axiom: "A",
+                                                  angle: MathF.PI / 3,
+                                                  pos: new PointF(pictureBox1.Width * 0.05f + i * 200f + rx,
+                                                                  pictureBox1.Height * 0.7f + ry),
+                                                  segmentLength: 6f,
+                                                  numIterations: 3);
+                gosperAlgae.Draw(p: gosperPen);
+            }
+            #endregion
             #region FunnyBlur
             mainBitmap = ApplyBlur7x7(mainBitmap);
             #endregion
+
             pictureBox1.Image = mainBitmap;
             mainBitmap.Save("C:\\Users\\razvan\\source\\repos\\ModelGraficaFull\\ExamenGrafica2026.png");
         }

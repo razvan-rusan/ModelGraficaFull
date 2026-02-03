@@ -78,7 +78,7 @@ namespace ModelGraficaFull
 
                 XYTransformation cloudTransform = (x, y) => (x + xOffset, y + yOffset);
                 Gosper gosper = new Gosper(mainGraphics, "A", MathF.PI / 3, new PointF(i*(pictureBox1.Width/ totalClouds), pictureBox1.Height / 2 - 50f - (float)random.NextDouble() * 20f), 20f, 4);
-                gosper.Draw(new Pen(Color.FromArgb(20, Color.White), 10), cloudTransform);
+                //gosper.Draw(new Pen(Color.FromArgb(20, Color.White), 10), cloudTransform);
             }
             #endregion
             #region Birds
